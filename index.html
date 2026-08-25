@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Birthday Surprise 🎁</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffd6e7, #e6d7ff);
+      font-family: Arial, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .container {
+      width: 100%;
+      padding: 25px;
+    }
+
+    h1 {
+      color: #8b4b72;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #6d5363;
+      font-size: 17px;
+    }
+
+    .gift {
+      position: relative;
+      width: 150px;
+      height: 120px;
+      margin: 50px auto 25px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .gift:hover {
+      transform: scale(1.08);
+    }
+
+    .box {
+      position: absolute;
+      bottom: 0;
+      width: 150px;
+      height: 90px;
+      background: #ff78a8;
+      border-radius: 8px;
+    }
+
+    .lid {
+      position: absolute;
+      top: 10px;
+      left: -8px;
+      width: 166px;
+      height: 35px;
+      background: #ff5f98;
+      border-radius: 8px;
+      transition: 0.8s;
+      z-index: 2;
+    }
+
+    .ribbon {
+      position: absolute;
+      left: 62px;
+      top: 0;
+      width: 26px;
+      height: 120px;
+      background: #ffd45c;
+      z-index: 3;
+    }
+
+    .open .lid {
+      transform: translateY(-70px) rotate(-8deg);
+    }
+
+    .message {
+      display: none;
+      animation: fadeIn 1.2s ease;
+    }
+
+    .message h2 {
+      color: #d64f88;
+      font-size: 30px;
+    }
+
+    .message p {
+      line-height: 1.7;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .heart {
+      font-size: 35px;
+      margin-top: 15px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div id="start">
+      <h1>A little surprise for you... 🎀</h1>
+      <p>Tap the gift to open it 🎁</p>
+
+      <div class="gift" onclick="openGift()">
+        <div class="lid"></div>
+        <div class="box"></div>
+        <div class="ribbon"></div>
+      </div>
+    </div>
+
+    <div class="message" id="message">
+      <div class="heart">💗✨</div>
+      <h2>Happy Birthday, မမအိမ့်! 🎂</h2>
+      <p>
+        Wishing you a beautiful birthday<br>
+        filled with happiness, smiles and lovely memories. 🤍
+      </p>
+      <div class="heart">🎁🌷💗</div>
+    </div>
+
+  </div>
+
+  <script>
+    function openGift() {
+      document.querySelector(".gift").classList.add("open");
+
+      setTimeout(function() {
+        document.getElementById("start").style.display = "none";
+        document.getElementById("message").style.display = "block";
+      }, 900);
+    }
+  </script>
+
+</body>
+</html>
