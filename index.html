@@ -1,234 +1,826 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Birthday Surprise 🎁</title>
-.heart-float {
-  position: fixed;
-  bottom: -30px;
-  font-size: 25px;
-  animation: floatUp 5s linear forwards;
-  pointer-events: none;
-  z-index: 10;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Eaint Hmue Thwe 🤍</title>
+
+<style>
+* {
+    box-sizing: border-box;
 }
 
-@keyframes floatUp {
-  0% {
-    transform: translateY(0) scale(1);
-    opacity: 1;
-  }
-
-  100% {
-    transform: translateY(-100vh) scale(1.5);
-    opacity: 0;
-  }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Georgia, "Times New Roman", serif;
+    color: #fff;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,.15), transparent 25%),
+        radial-gradient(circle at 80% 80%, rgba(255,180,220,.12), transparent 30%),
+        linear-gradient(135deg, #160b27, #28133f, #12091e);
+    overflow-x: hidden;
 }
-  <style>
-    * {
-      box-sizing: border-box;
-    }
 
-    html {
-      min-height: 100%;
-    }
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+        radial-gradient(circle, rgba(255,255,255,.8) 1px, transparent 1px);
+    background-size: 70px 70px;
+    opacity: .15;
+}
 
- body {
-  margin: 0;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #ffd6e7, #e6d7ff);
-  font-family: Arial, sans-serif;
-  text-align: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
+.screen {
+    min-height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 25px;
+    animation: fadeIn .8s ease;
+}
+
+.screen.active {
+    display: flex;
 }
 
 .container {
-  width: 100%;
-  min-height: 100vh;
-  padding: 25px;
+    width: 100%;
+    max-width: 850px;
 }
 
-    .container {
-      width: 100%;
-      min-height: 100vh;
-      padding: 25px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+h1 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 26px;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.7;
+}
+
+.glow {
+    text-shadow: 0 0 15px rgba(255,180,230,.8);
+}
+
+input {
+    width: min(90%, 380px);
+    padding: 15px 20px;
+    margin: 20px 0;
+    border: 1px solid rgba(255,255,255,.35);
+    border-radius: 30px;
+    outline: none;
+    color: white;
+    background: rgba(255,255,255,.1);
+    text-align: center;
+    font-size: 17px;
+}
+
+input::placeholder {
+    color: rgba(255,255,255,.65);
+}
+
+button {
+    border: none;
+    padding: 13px 28px;
+    margin: 8px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    background: linear-gradient(135deg, #b86cff, #ff77b7);
+    box-shadow: 0 0 20px rgba(255,119,183,.25);
+    transition: .3s;
+}
+
+button:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 0 25px rgba(255,150,210,.5);
+}
+
+.no-btn {
+    background: rgba(255,255,255,.12);
+}
+
+.hidden {
+    display: none !important;
+}
+
+.error {
+    color: #ff9cc9;
+    margin-top: 5px;
+    min-height: 25px;
+}
+
+.tap {
+    margin-top: 30px;
+    font-size: 15px;
+    opacity: .75;
+    animation: pulse 1.5s infinite;
+    cursor: pointer;
+}
+
+/* Tarot */
+
+.tarot-area {
+    margin-top: 30px;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.card {
+    width: 150px;
+    height: 240px;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.card-inner {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transition: transform .9s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .card-inner {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    backface-visibility: hidden;
+    overflow: hidden;
+}
+
+.card-front {
+    background:
+        radial-gradient(circle at center, rgba(255,255,255,.2), transparent 30%),
+        linear-gradient(145deg, #3d175f, #140a2b);
+    border: 2px solid rgba(255,220,255,.6);
+    box-shadow: 0 0 25px rgba(200,120,255,.35);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-front::before {
+    content: "✦";
+    font-size: 65px;
+    color: #ffd8f2;
+    text-shadow: 0 0 20px #fff;
+}
+
+.card-back {
+    transform: rotateY(180deg);
+    background:
+        radial-gradient(circle at 50% 35%, #fff1fc, transparent 20%),
+        linear-gradient(145deg, #8b4aa5, #30133e);
+    border: 2px solid #ffd8f3;
+    padding: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-message {
+    font-size: 17px;
+    line-height: 1.6;
+    text-shadow: 0 0 8px rgba(255,255,255,.4);
+}
+
+.card.completed {
+    opacity: .35;
+    pointer-events: none;
+}
+
+.instruction {
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+/* Music */
+
+.music-box {
+    margin: 25px auto;
+    max-width: 450px;
+    padding: 20px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.15);
+}
+
+audio {
+    width: 100%;
+}
+
+/* Envelope */
+
+.envelope {
+    width: 220px;
+    height: 150px;
+    margin: 35px auto;
+    position: relative;
+    cursor: pointer;
+    background: #d98bb9;
+    border-radius: 8px;
+    box-shadow: 0 0 30px rgba(255,130,200,.35);
+}
+
+.envelope::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    border-left: 110px solid transparent;
+    border-right: 110px solid transparent;
+    border-top: 85px solid #efa9d0;
+    transform-origin: top;
+    transition: .8s;
+    z-index: 3;
+}
+
+.envelope.open::before {
+    transform: rotateX(180deg);
+}
+
+.envelope::after {
+    content: "💌";
+    position: absolute;
+    font-size: 50px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Wish */
+
+.wish-box {
+    width: min(92%, 720px);
+    max-height: 55vh;
+    overflow-y: auto;
+    text-align: left;
+    margin: 25px auto;
+    padding: 28px;
+    border-radius: 20px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.18);
+    box-shadow: 0 0 30px rgba(190,120,220,.18);
+}
+
+.wish-box p {
+    font-size: 17px;
+    line-height: 1.9;
+}
+
+/* floating hearts */
+
+.heart {
+    position: fixed;
+    bottom: -30px;
+    animation: floatUp linear forwards;
+    pointer-events: none;
+    opacity: .7;
+}
+
+/* Animations */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%,100% { opacity: .4; }
+    50% { opacity: 1; }
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@media(max-width:600px) {
+    h1 {
+        font-size: 27px;
     }
 
-    h1 {
-      color: #8b4b72;
-      margin-bottom: 10px;
+    h2 {
+        font-size: 22px;
     }
 
     p {
-      color: #6d5363;
-      font-size: 17px;
+        font-size: 16px;
     }
 
-    .gift {
-      position: relative;
-      width: 150px;
-      height: 120px;
-      margin: 50px auto 25px;
-      cursor: pointer;
-      transition: 0.3s;
+    .card {
+        width: 105px;
+        height: 175px;
     }
 
-    .gift:hover {
-      transform: scale(1.08);
+    .card-message {
+        font-size: 13px;
     }
 
-    .box {
-      position: absolute;
-      bottom: 0;
-      width: 150px;
-      height: 90px;
-      background: #ff78a8;
-      border-radius: 8px;
+    .card-front::before {
+        font-size: 45px;
     }
-
-    .lid {
-      position: absolute;
-      top: 10px;
-      left: -8px;
-      width: 166px;
-      height: 35px;
-      background: #ff5f98;
-      border-radius: 8px;
-      transition: 0.8s;
-      z-index: 2;
-    }
-
-    .ribbon {
-      position: absolute;
-      left: 62px;
-      top: 0;
-      width: 26px;
-      height: 120px;
-      background: #ffd45c;
-      z-index: 3;
-    }
-
-    .open .lid {
-      transform: translateY(-70px) rotate(-8deg);
-    }
-
-    .message {
-      display: none;
-      width: 100%;
-      max-width: 650px;
-      padding: 30px 20px;
-      animation: fadeIn 1.2s ease;
-    }
-
-    .message h2 {
-      color: #d64f88;
-      font-size: 30px;
-    }
-
-    .message p {
-      line-height: 1.8;
-      margin: 22px 0;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .heart {
-      font-size: 35px;
-      margin-top: 15px;
-    }
-  </style>
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<!-- STEP 1 -->
+<section id="step1" class="screen active">
+    <div class="container">
+        <h1 class="glow">Enter your name here</h1>
 
-    <div id="start">
-      <h1>A little surprise for you... 🎀</h1>
-      <p>Tap the gift to open it 🎁</p>
+        <input
+            id="nameInput"
+            type="text"
+            placeholder="Enter your name..."
+            autocomplete="off"
+        >
 
-      <div class="gift" onclick="openGift()">
-        <div class="lid"></div>
-        <div class="box"></div>
-        <div class="ribbon"></div>
-      </div>
+        <br>
+
+        <button onclick="checkName()">Enter</button>
+
+        <div id="nameError" class="error"></div>
     </div>
+</section>
 
-    <div class="message" id="message">
-      <div class="heart">💗✨</div>
 
-      <h2>Happy Birthday, Ma Ma Eaint! 🎂</h2>
+<!-- STEP 2 -->
+<section id="step2" class="screen">
+    <div class="container">
+        <h1 class="glow">
+            Oh... so you're the birthday girl. 🤍
+        </h1>
 
-      <p>
-        When I first met you in the channel, I immediately thought
-        that you were such a kind-hearted person with such a sweet way
-        of speaking. Even though I’m not someone who easily gets
-        close to everyone, I found myself wanting to talk to you,
-        get closer to you, and stay by your side.
-      </p>
+        <p>
+            I have a little wish here just for you.<br>
+            Will you follow it until the very end?
+        </p>
 
-      <p>
-        For someone I never expected to become this close to,
-        I made this little something for your birthday so that
-        it could become a memorable part of your special day. 🤍
-      </p>
+        <div>
+            <button onclick="acceptWish()">Yes</button>
+            <button class="no-btn" onclick="rejectWish()">No</button>
+        </div>
 
-      <p>
-        Ma Ma, starting from this birthday and for many years to come,
-        I hope you'll always be happy, healthy, and surrounded by
-        the people you love. I hope you become an amazing doctor
-        and get to save and touch the lives of many people.
-        And I also hope that someday, you'll finally get the chance
-        to meet PerthSanta in person. 🥹🤍
-      </p>
-
-      <p>
-        No matter when or where, I’ll always be here to support you,
-        cheering you on so that you can keep shining brighter
-        and smiling even more happily. ✨
-      </p>
-
-      <div class="heart">🎁🌷💗</div>
+        <p id="noMessage" class="error"></p>
     </div>
+</section>
 
-  </div>
 
-  <script>
-    function openGift() {
-      document.querySelector(".gift").classList.add("open");
+<!-- STEP 3 -->
+<section id="step3" class="screen">
+    <div class="container">
+        <h1 class="glow">
+            Okay, then... let's go and see it until the very end. 🤍
+        </h1>
 
-      setTimeout(function() {
-        document.getElementById("start").style.display = "none";
-        document.getElementById("message").style.display = "block";
-      }, 900);
-    }setInterval(function() {
-  const heart = document.createElement("div");
+        <div class="tap" onclick="showTarot()">
+            Tap to continue ✨
+        </div>
+    </div>
+</section>
 
-  heart.className = "heart-float";
-  heart.innerHTML = Math.random() > 0.5 ? "💗" : "✨";
 
-  heart.style.left = Math.random() * 100 + "vw";
+<!-- STEP 4 TAROT -->
+<section id="step4" class="screen">
+    <div class="container">
 
-  document.body.appendChild(heart);
+        <h2 class="glow" id="tarotInstruction">
+            Tap the first one ✦
+        </h2>
 
-  setTimeout(function() {
-    heart.remove();
-  }, 5000);
-}, 700);
-  </script>
+        <div class="tarot-area">
+
+            <div class="cards">
+
+                <div class="card" id="card1" onclick="flipCard(1)">
+                    <div class="card-inner">
+
+                        <div class="card-front"></div>
+
+                        <div class="card-back">
+                            <div class="card-message">
+                                I'll give you all of my love 🤍
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="card hidden" id="card2" onclick="flipCard(2)">
+                    <div class="card-inner">
+
+                        <div class="card-front"></div>
+
+                        <div class="card-back">
+                            <div class="card-message">
+                                All my attention on you 💗
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+
+                <div class="card hidden" id="card3" onclick="flipCard(3)">
+                    <div class="card-inner">
+
+                        <div class="card-front"></div>
+
+                        <div class="card-back">
+                            <div class="card-message">
+                                I'll always be here to support you 💗
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- STEP 5 MUSIC -->
+<section id="step5" class="screen">
+    <div class="container">
+
+        <h1 class="glow">
+            Amway Sein has a song for you to listen to 🎧🤍
+        </h1>
+
+        <div class="tap" onclick="startMusic()">
+            Tap to listen 🎵
+        </div>
+
+        <div id="musicBox" class="music-box hidden">
+
+            <audio id="birthdaySong" controls>
+                <source src="birthday-song.mp3" type="audio/mpeg">
+                Your browser does not support audio.
+            </audio>
+
+            <p>
+                Take your time and enjoy the song. 🤍
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+
+<!-- STEP 6 ENVELOPE -->
+<section id="step6" class="screen">
+    <div class="container">
+
+        <h1 class="glow">
+            It's time to read your birthday wish 🎂💗
+        </h1>
+
+        <p>
+            There's something special waiting inside. 🤍
+        </p>
+
+        <p>
+            Tap the envelope to open it 💌
+        </p>
+
+        <div class="envelope" onclick="openEnvelope(this)"></div>
+
+    </div>
+</section>
+
+
+<!-- STEP 7 WISH -->
+<section id="step7" class="screen">
+    <div class="container">
+
+        <h1 class="glow">
+            A Birthday Wish For You 🎂🤍
+        </h1>
+
+        <div class="wish-box">
+
+            <p>
+                When I first met you in the channel, I immediately thought
+                that you were such a kind-hearted person with a really sweet
+                way of speaking. Even though I am not someone who easily gets
+                close to everyone, I found myself wanting to talk to you,
+                get closer to you, and stay by your side.
+            </p>
+
+            <p>
+                For the someone I never expected to become that close to,
+                I made this little something for your birthday so that it
+                could become a memorable part of your special day.
+            </p>
+
+            <p>
+                Dear Ma Ma, starting from this birthday and for many years
+                to come, I hope you'll always be happy, healthy, and
+                surrounded by the people you love. I hope you become an
+                amazing doctor and get to save and touch the lives of many
+                people. And I also hope that someday, you'll finally get
+                the chance to meet PerthSanta in person. 🤍
+            </p>
+
+            <p>
+                No matter when or where, I will always be here to support you,
+                cheering you on so that you can keep shining brighter and
+                smiling even more happily. ✨
+            </p>
+
+        </div>
+
+        <div class="tap" onclick="showFinal()">
+            Tap to continue 🤍
+        </div>
+
+    </div>
+</section>
+
+
+<!-- FINAL -->
+<section id="step8" class="screen">
+    <div class="container">
+
+        <h1 class="glow">
+            Thank you for reading until the very end.
+        </h1>
+
+        <h2>
+            I love you. 🤍
+        </h2>
+
+        <p style="font-size:45px;">
+            🎂💗✨
+        </p>
+
+    </div>
+</section>
+
+
+<script>
+
+let currentCard = 1;
+let musicTimer = null;
+
+
+/* Change screen */
+
+function goTo(step) {
+
+    document.querySelectorAll(".screen").forEach(screen => {
+        screen.classList.remove("active");
+    });
+
+    document.getElementById("step" + step).classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* Name */
+
+function checkName() {
+
+    const name = document
+        .getElementById("nameInput")
+        .value
+        .trim();
+
+    const error = document.getElementById("nameError");
+
+    if (name === "Eaint Hmue Thwe") {
+
+        error.textContent = "";
+
+        createHearts();
+
+        setTimeout(() => {
+            goTo(2);
+        }, 500);
+
+    } else {
+
+        error.textContent =
+            "Hmm... that's not the right name. Try again. 🤍";
+
+    }
+}
+
+
+/* No */
+
+function rejectWish() {
+
+    const message = document.getElementById("noMessage");
+
+    message.textContent =
+        "Nope... you can't escape this one. 😌💗";
+
+}
+
+
+/* Yes */
+
+function acceptWish() {
+
+    goTo(3);
+
+}
+
+
+/* Tarot start */
+
+function showTarot() {
+
+    goTo(4);
+
+}
+
+
+/* Tarot cards */
+
+function flipCard(number) {
+
+    if (number !== currentCard) return;
+
+    const card = document.getElementById("card" + number);
+
+    card.classList.add("flipped");
+
+    setTimeout(() => {
+
+        if (number === 1) {
+
+            document.getElementById("tarotInstruction")
+                .textContent = "Tap the second one ✦";
+
+            document.getElementById("card2")
+                .classList.remove("hidden");
+
+            currentCard = 2;
+
+        }
+
+        else if (number === 2) {
+
+            document.getElementById("tarotInstruction")
+                .textContent = "Tap the last one ✦";
+
+            document.getElementById("card3")
+                .classList.remove("hidden");
+
+            currentCard = 3;
+
+        }
+
+        else if (number === 3) {
+
+            document.getElementById("tarotInstruction")
+                .textContent = "Three little wishes, just for you. 🤍";
+
+            setTimeout(() => {
+                goTo(5);
+            }, 1800);
+
+        }
+
+    }, 900);
+}
+
+
+/* Music */
+
+function startMusic() {
+
+    const music = document.getElementById("birthdaySong");
+
+    document.getElementById("musicBox")
+        .classList.remove("hidden");
+
+    music.play().catch(() => {});
+
+    clearTimeout(musicTimer);
+
+    musicTimer = setTimeout(() => {
+
+        goTo(6);
+
+    }, 30000);
+
+}
+
+
+/* Envelope */
+
+function openEnvelope(envelope) {
+
+    envelope.classList.add("open");
+
+    setTimeout(() => {
+
+        goTo(7);
+
+    }, 1000);
+
+}
+
+
+/* Final */
+
+function showFinal() {
+
+    goTo(8);
+
+}
+
+
+/* Floating hearts */
+
+function createHearts() {
+
+    setInterval(() => {
+
+        const heart = document.createElement("div");
+
+        heart.className = "heart";
+
+        heart.textContent =
+            ["🤍","💗","✨","♡"][Math.floor(Math.random() * 4)];
+
+        heart.style.left =
+            Math.random() * 100 + "vw";
+
+        heart.style.fontSize =
+            (12 + Math.random() * 18) + "px";
+
+        heart.style.animationDuration =
+            (5 + Math.random() * 5) + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+            heart.remove();
+        }, 10000);
+
+    }, 800);
+
+}
+
+
+/* Enter key */
+
+document.getElementById("nameInput")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter") {
+            checkName();
+        }
+
+    });
+
+</script>
 
 </body>
 </html>
