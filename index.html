@@ -358,7 +358,10 @@ audio {
 <!-- STEP 1 -->
 <section id="step1" class="screen active">
     <div class="container">
-        <h1 class="glow">Enter your name here</h1>
+
+        <h1 class="glow">
+            Enter your name here
+        </h1>
 
         <input
             id="nameInput"
@@ -369,9 +372,12 @@ audio {
 
         <br>
 
-        <button onclick="checkName()">Enter</button>
+        <button onclick="checkName()">
+            Enter
+        </button>
 
         <div id="nameError" class="error"></div>
+
     </div>
 </section>
 
@@ -379,6 +385,7 @@ audio {
 <!-- STEP 2 -->
 <section id="step2" class="screen">
     <div class="container">
+
         <h1 class="glow">
             Oh... so you're the birthday girl. 🤍
         </h1>
@@ -389,11 +396,17 @@ audio {
         </p>
 
         <div>
-            <button onclick="acceptWish()">Yes</button>
-            <button class="no-btn" onclick="rejectWish()">No</button>
+            <button onclick="acceptWish()">
+                Yes
+            </button>
+
+            <button class="no-btn" onclick="rejectWish()">
+                No
+            </button>
         </div>
 
         <p id="noMessage" class="error"></p>
+
     </div>
 </section>
 
@@ -401,6 +414,7 @@ audio {
 <!-- STEP 3 -->
 <section id="step3" class="screen">
     <div class="container">
+
         <h1 class="glow">
             Okay, then... let's go and see it until the very end. 🤍
         </h1>
@@ -408,6 +422,7 @@ audio {
         <div class="tap" onclick="showTarot()">
             Tap to continue ✨
         </div>
+
     </div>
 </section>
 
@@ -499,6 +514,15 @@ audio {
                 Take your time and enjoy the song. 🤍
             </p>
 
+            <!-- NEW: Continue button -->
+            <div
+                id="continueMusic"
+                class="tap hidden"
+                onclick="continueFromMusic()"
+            >
+                Tap to continue 🤍
+            </div>
+
         </div>
 
     </div>
@@ -521,7 +545,10 @@ audio {
             Tap the envelope to open it 💌
         </p>
 
-        <div class="envelope" onclick="openEnvelope(this)"></div>
+        <div
+            class="envelope"
+            onclick="openEnvelope(this)"
+        ></div>
 
     </div>
 </section>
@@ -599,7 +626,6 @@ audio {
 <script>
 
 let currentCard = 1;
-let musicTimer = null;
 
 
 /* Change screen */
@@ -610,7 +636,9 @@ function goTo(step) {
         screen.classList.remove("active");
     });
 
-    document.getElementById("step" + step).classList.add("active");
+    document
+        .getElementById("step" + step)
+        .classList.add("active");
 
     window.scrollTo({
         top: 0,
@@ -628,7 +656,8 @@ function checkName() {
         .value
         .trim();
 
-    const error = document.getElementById("nameError");
+    const error =
+        document.getElementById("nameError");
 
     if (name === "Eaint Hmue Thwe") {
 
@@ -653,7 +682,8 @@ function checkName() {
 
 function rejectWish() {
 
-    const message = document.getElementById("noMessage");
+    const message =
+        document.getElementById("noMessage");
 
     message.textContent =
         "Nope... you can't escape this one. 😌💗";
@@ -685,7 +715,8 @@ function flipCard(number) {
 
     if (number !== currentCard) return;
 
-    const card = document.getElementById("card" + number);
+    const card =
+        document.getElementById("card" + number);
 
     card.classList.add("flipped");
 
@@ -694,7 +725,8 @@ function flipCard(number) {
         if (number === 1) {
 
             document.getElementById("tarotInstruction")
-                .textContent = "Tap the second one ✦";
+                .textContent =
+                "Tap the second one ✦";
 
             document.getElementById("card2")
                 .classList.remove("hidden");
@@ -706,7 +738,8 @@ function flipCard(number) {
         else if (number === 2) {
 
             document.getElementById("tarotInstruction")
-                .textContent = "Tap the last one ✦";
+                .textContent =
+                "Tap the last one ✦";
 
             document.getElementById("card3")
                 .classList.remove("hidden");
@@ -718,7 +751,8 @@ function flipCard(number) {
         else if (number === 3) {
 
             document.getElementById("tarotInstruction")
-                .textContent = "Three little wishes, just for you. 🤍";
+                .textContent =
+                "Three little wishes, just for you. 🤍";
 
             setTimeout(() => {
                 goTo(5);
@@ -734,20 +768,30 @@ function flipCard(number) {
 
 function startMusic() {
 
-    const music = document.getElementById("birthdaySong");
+    const music =
+        document.getElementById("birthdaySong");
 
     document.getElementById("musicBox")
         .classList.remove("hidden");
 
+    document.getElementById("continueMusic")
+        .classList.remove("hidden");
+
     music.play().catch(() => {});
 
-    clearTimeout(musicTimer);
+}
 
-    musicTimer = setTimeout(() => {
 
-        goTo(6);
+/* NEW: Continue from music */
 
-    }, 30000);
+function continueFromMusic() {
+
+    const music =
+        document.getElementById("birthdaySong");
+
+    music.pause();
+
+    goTo(6);
 
 }
 
@@ -782,12 +826,14 @@ function createHearts() {
 
     setInterval(() => {
 
-        const heart = document.createElement("div");
+        const heart =
+            document.createElement("div");
 
         heart.className = "heart";
 
         heart.textContent =
-            ["🤍","💗","✨","♡"][Math.floor(Math.random() * 4)];
+            ["🤍","💗","✨","♡"]
+            [Math.floor(Math.random() * 4)];
 
         heart.style.left =
             Math.random() * 100 + "vw";
@@ -811,7 +857,8 @@ function createHearts() {
 
 /* Enter key */
 
-document.getElementById("nameInput")
+document
+    .getElementById("nameInput")
     .addEventListener("keydown", function(event) {
 
         if (event.key === "Enter") {
