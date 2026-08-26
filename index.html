@@ -205,16 +205,6 @@ button:hover {
     text-shadow: 0 0 8px rgba(255,255,255,.4);
 }
 
-.card.completed {
-    opacity: .35;
-    pointer-events: none;
-}
-
-.instruction {
-    font-size: 20px;
-    margin: 20px 0;
-}
-
 /* Music */
 
 .music-box {
@@ -289,7 +279,7 @@ audio {
     line-height: 1.9;
 }
 
-/* floating hearts */
+/* Floating hearts */
 
 .heart {
     position: fixed;
@@ -313,8 +303,13 @@ audio {
 }
 
 @keyframes pulse {
-    0%,100% { opacity: .4; }
-    50% { opacity: 1; }
+    0%,100% {
+        opacity: .4;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
 
 @keyframes floatUp {
@@ -325,6 +320,7 @@ audio {
 }
 
 @media(max-width:600px) {
+
     h1 {
         font-size: 27px;
     }
@@ -439,7 +435,11 @@ audio {
 
             <div class="cards">
 
-                <div class="card" id="card1" onclick="flipCard(1)">
+                <div
+                    class="card"
+                    id="card1"
+                    onclick="flipCard(1)"
+                >
                     <div class="card-inner">
 
                         <div class="card-front"></div>
@@ -454,7 +454,11 @@ audio {
                 </div>
 
 
-                <div class="card hidden" id="card2" onclick="flipCard(2)">
+                <div
+                    class="card hidden"
+                    id="card2"
+                    onclick="flipCard(2)"
+                >
                     <div class="card-inner">
 
                         <div class="card-front"></div>
@@ -469,7 +473,11 @@ audio {
                 </div>
 
 
-                <div class="card hidden" id="card3" onclick="flipCard(3)">
+                <div
+                    class="card hidden"
+                    id="card3"
+                    onclick="flipCard(3)"
+                >
                     <div class="card-inner">
 
                         <div class="card-front"></div>
@@ -499,14 +507,28 @@ audio {
             Amway Sein has a song for you to listen to 🎧🤍
         </h1>
 
-        <div class="tap" onclick="startMusic()">
+        <div
+            class="tap"
+            onclick="startMusic()"
+        >
             Tap to listen 🎵
         </div>
 
-        <div id="musicBox" class="music-box hidden">
 
-            <audio id="birthdaySong" controls>
-                <source src="birthday-song.mp3" type="audio/mpeg">
+        <div
+            id="musicBox"
+            class="music-box hidden"
+        >
+
+            <audio
+                id="birthdaySong"
+                controls
+            >
+                <source
+                    src="birthday-song.mp3"
+                    type="audio/mpeg"
+                >
+
                 Your browser does not support audio.
             </audio>
 
@@ -514,15 +536,15 @@ audio {
                 Take your time and enjoy the song. 🤍
             </p>
 
-            <!-- NEW: Continue button -->
-            <div
-                id="continueMusic"
-                class="tap hidden"
-                onclick="continueFromMusic()"
-            >
-                Tap to continue 🤍
-            </div>
+        </div>
 
+
+        <!-- Continue button -->
+        <div
+            class="tap"
+            onclick="continueFromMusic()"
+        >
+            Tap to continue 🤍
         </div>
 
     </div>
@@ -595,7 +617,10 @@ audio {
 
         </div>
 
-        <div class="tap" onclick="showFinal()">
+        <div
+            class="tap"
+            onclick="showFinal()"
+        >
             Tap to continue 🤍
         </div>
 
@@ -632,9 +657,11 @@ let currentCard = 1;
 
 function goTo(step) {
 
-    document.querySelectorAll(".screen").forEach(screen => {
-        screen.classList.remove("active");
-    });
+    document
+        .querySelectorAll(".screen")
+        .forEach(screen => {
+            screen.classList.remove("active");
+        });
 
     document
         .getElementById("step" + step)
@@ -651,10 +678,11 @@ function goTo(step) {
 
 function checkName() {
 
-    const name = document
-        .getElementById("nameInput")
-        .value
-        .trim();
+    const name =
+        document
+            .getElementById("nameInput")
+            .value
+            .trim();
 
     const error =
         document.getElementById("nameError");
@@ -673,7 +701,6 @@ function checkName() {
 
         error.textContent =
             "Hmm... that's not the right name. Try again. 🤍";
-
     }
 }
 
@@ -687,7 +714,6 @@ function rejectWish() {
 
     message.textContent =
         "Nope... you can't escape this one. 😌💗";
-
 }
 
 
@@ -696,7 +722,6 @@ function rejectWish() {
 function acceptWish() {
 
     goTo(3);
-
 }
 
 
@@ -705,7 +730,6 @@ function acceptWish() {
 function showTarot() {
 
     goTo(4);
-
 }
 
 
@@ -724,11 +748,13 @@ function flipCard(number) {
 
         if (number === 1) {
 
-            document.getElementById("tarotInstruction")
+            document
+                .getElementById("tarotInstruction")
                 .textContent =
                 "Tap the second one ✦";
 
-            document.getElementById("card2")
+            document
+                .getElementById("card2")
                 .classList.remove("hidden");
 
             currentCard = 2;
@@ -737,11 +763,13 @@ function flipCard(number) {
 
         else if (number === 2) {
 
-            document.getElementById("tarotInstruction")
+            document
+                .getElementById("tarotInstruction")
                 .textContent =
                 "Tap the last one ✦";
 
-            document.getElementById("card3")
+            document
+                .getElementById("card3")
                 .classList.remove("hidden");
 
             currentCard = 3;
@@ -750,14 +778,14 @@ function flipCard(number) {
 
         else if (number === 3) {
 
-            document.getElementById("tarotInstruction")
+            document
+                .getElementById("tarotInstruction")
                 .textContent =
                 "Three little wishes, just for you. 🤍";
 
             setTimeout(() => {
                 goTo(5);
             }, 1800);
-
         }
 
     }, 900);
@@ -771,18 +799,15 @@ function startMusic() {
     const music =
         document.getElementById("birthdaySong");
 
-    document.getElementById("musicBox")
-        .classList.remove("hidden");
-
-    document.getElementById("continueMusic")
+    document
+        .getElementById("musicBox")
         .classList.remove("hidden");
 
     music.play().catch(() => {});
-
 }
 
 
-/* NEW: Continue from music */
+/* Continue without waiting for the song */
 
 function continueFromMusic() {
 
@@ -792,7 +817,6 @@ function continueFromMusic() {
     music.pause();
 
     goTo(6);
-
 }
 
 
@@ -803,11 +827,8 @@ function openEnvelope(envelope) {
     envelope.classList.add("open");
 
     setTimeout(() => {
-
         goTo(7);
-
     }, 1000);
-
 }
 
 
@@ -816,7 +837,6 @@ function openEnvelope(envelope) {
 function showFinal() {
 
     goTo(8);
-
 }
 
 
@@ -832,7 +852,7 @@ function createHearts() {
         heart.className = "heart";
 
         heart.textContent =
-            ["🤍","💗","✨","♡"]
+            ["🤍", "💗", "✨", "♡"]
             [Math.floor(Math.random() * 4)];
 
         heart.style.left =
@@ -851,7 +871,6 @@ function createHearts() {
         }, 10000);
 
     }, 800);
-
 }
 
 
